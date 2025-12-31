@@ -14,6 +14,10 @@ export default class Rules {
         }
     }
 
+    isNewHighScore(currentScore: number, highscore: number) {
+        return currentScore > highscore
+    }
+
 
 
 }

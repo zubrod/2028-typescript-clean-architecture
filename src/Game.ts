@@ -7,7 +7,7 @@ export default class Game {
     control: Control
 
     constructor() {
-        this.board = new Board()
+        this.board = new Board(50)
         this.control = new Control()
 
         this.board.init(4, 4)
@@ -56,6 +56,10 @@ export default class Game {
         console.log(boardDimensions[1])
         console.log(boardDimensions[2])
         console.log(boardDimensions[3])
+
+        let highScore = this.board.getHighscore()
+
+        console.log("Your Highscore: " + highScore)
 
 
         return true
