@@ -9,11 +9,13 @@ export default class Game {
     constructor() {
         this.board = new Board()
         this.control = new Control()
+
+        this.board.init(4, 4)
+
     }
 
     async run() {
 
-        this.board.init(4, 4)
         let boardDimensions = this.board.getBoard()
         console.log(boardDimensions)
 
@@ -41,6 +43,10 @@ export default class Game {
 
         if (input === "s") {
             this.moveDown()
+        }
+
+        if (input === "c") {
+            return false
         }
 
         this.board.placeNewNumber()

@@ -1,5 +1,3 @@
-import { resolve } from "node:dns";
-
 const readline = require('node:readline');
 const { stdin: input, stdout: output } = require('node:process');
 
