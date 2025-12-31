@@ -15,9 +15,7 @@ var Rules = /** @class */ (function () {
             return 0;
         }
     };
-    Rules.prototype.isNewHighScore = function (currentScore, highscore) {
-        return currentScore > highscore;
-    };
     return Rules;
 }());
 exports.default = Rules;
+//# sourceMappingURL=Rules.js.map

@@ -5,19 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Rules_1 = __importDefault(require("./Rules"));
 var Board = /** @class */ (function () {
-    function Board(highscore) {
+    function Board() {
         this.rules = new Rules_1.default();
-        this.currentScore = 0;
-        this.highscore = highscore;
     }
     Board.prototype.getHighscore = function () {
         return this.highscore;
     };
     Board.prototype.updateHighscore = function (value) {
-        this.currentScore = this.currentScore + value;
-        if (this.rules.isNewHighScore(this.currentScore, this.highscore)) {
-            this.highscore = this.currentScore;
-        }
+        this.highscore = this.highscore + value;
     };
     Board.prototype.init = function (rows, cols) {
         this.dimensions = [];
@@ -189,3 +184,4 @@ var Board = /** @class */ (function () {
     return Board;
 }());
 exports.default = Board;
+//# sourceMappingURL=Board.js.map

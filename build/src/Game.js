@@ -43,7 +43,7 @@ var Board_1 = __importDefault(require("./Board"));
 var Control_1 = __importDefault(require("./Control"));
 var Game = /** @class */ (function () {
     function Game() {
-        this.board = new Board_1.default(50);
+        this.board = new Board_1.default();
         this.control = new Control_1.default();
         this.board.init(4, 4);
     }
@@ -67,7 +67,7 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.processUserInput = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var input, boardDimensions, highScore;
+            var input, boardDimensions;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.control.waitForInput()];
@@ -94,8 +94,6 @@ var Game = /** @class */ (function () {
                         console.log(boardDimensions[1]);
                         console.log(boardDimensions[2]);
                         console.log(boardDimensions[3]);
-                        highScore = this.board.getHighscore();
-                        console.log("Your Highscore: " + highScore);
                         return [2 /*return*/, true];
                 }
             });
@@ -124,3 +122,4 @@ var Game = /** @class */ (function () {
 exports.default = Game;
 var game = new Game();
 game.run();
+//# sourceMappingURL=Game.js.map

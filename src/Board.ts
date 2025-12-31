@@ -5,9 +5,24 @@ export default class Board {
 
     dimensions: number[][]
     rules: Rules
+    currentScore: number
+    highscore: number
 
-    constructor() {
+    constructor(highscore: number) {
         this.rules = new Rules()
+        this.currentScore = 0
+        this.highscore = highscore
+    }
+
+    getHighscore() {
+        return this.highscore
+    }
+
+    updateHighscore(value: number) {
+        this.currentScore = this.currentScore + value
+        if (this.rules.isNewHighScore(this.currentScore, this.highscore)) {
+            this.highscore = this.currentScore
+        }
     }
 
     init(rows: number, cols: number) {
@@ -127,9 +142,10 @@ export default class Board {
 
                 if (leftElement !== 0) {
 
-                    const newValue = this.rules.apply(currentElement, leftElement);
+                    const newValue = this.calculateNewValue(currentElement, leftElement);
 
                     if (newValue !== 0) {
+
                         newRow[i - d] = newValue;
                         newRow[i - d + 1] = 0;
                     }
@@ -171,10 +187,10 @@ export default class Board {
 
                 if (rightElement !== 0) {
 
-                    const newValue = this.rules.apply(lastElement, rightElement)
+                    const newValue = this.calculateNewValue(lastElement, rightElement)
 
                     if (newValue !== 0) {
-                        newRow[i + d] = this.rules.apply(lastElement, rightElement)
+                        newRow[i + d] = newValue
                         newRow[i + d - 1] = 0;
                         ;
                     }
@@ -187,6 +203,12 @@ export default class Board {
         }
 
         return newRow
+    }
+
+    calculateNewValue(movedElement: number, collisionElement: number) {
+        const newValue = this.rules.apply(movedElement, collisionElement)
+        this.updateHighscore(newValue)
+        return newValue
     }
 
 

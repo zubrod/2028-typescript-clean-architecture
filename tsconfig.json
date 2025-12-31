@@ -5,10 +5,13 @@
             "es6"
         ],
         "module": "commonjs",
-        "sourceMap": true,
         "outDir": "./build",
-        "rootDir": "src",
+        "rootDir": "./src",
         //  "strict": true,
         "esModuleInterop": true,
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "tests"
+    ],
 }
