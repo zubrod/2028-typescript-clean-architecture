@@ -6,7 +6,7 @@ export default class Control {
     rl: any
 
 
-    async waitForInput() {
+    async waitForInput(): Promise<string> {
 
         this.rl = readline.createInterface({ input, output });
 

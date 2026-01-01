@@ -3,13 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Rules_1 = __importDefault(require("./Rules"));
+var BasicRules_1 = __importDefault(require("./BasicRules"));
 var Board = /** @class */ (function () {
     function Board(highscore) {
-        this.rules = new Rules_1.default();
+        this.rules = new BasicRules_1.default();
         this.currentScore = 0;
         this.highscore = highscore;
     }
+    Board.prototype.setDimensions = function (dimensions) {
+        this.dimensions = dimensions;
+    };
     Board.prototype.getHighscore = function () {
         return this.highscore;
     };
@@ -22,14 +25,18 @@ var Board = /** @class */ (function () {
     Board.prototype.init = function (rows, cols) {
         this.dimensions = [];
         for (var i = 0; i < rows; i++) {
-            this.dimensions[i] = [0, 0, 0, 0];
+            var initialCol = [];
+            for (var i_1 = 0; i_1 < cols; ++i_1) {
+                initialCol.push(0);
+            }
+            this.dimensions[i] = initialCol;
         }
         this.dimensions[0][0] = 4;
         this.dimensions[0][2] = 4;
         console.log("Board is initizialzed is running");
     };
     Board.prototype.placeNewNumber = function () {
-        while (true) {
+        while (!this.isGameOver()) {
             var min = this.dimensions.length - 1;
             var max = this.dimensions[0].length - 1;
             var indexRow = this.getRandomNumber(0, max);
@@ -45,6 +52,9 @@ var Board = /** @class */ (function () {
         }
         return true;
     };
+    Board.prototype.isGameOver = function () {
+        return this.rules.isGameOver(this.dimensions);
+    };
     Board.prototype.getValue = function (row, col) {
         return this.dimensions[row][col];
     };
@@ -54,7 +64,7 @@ var Board = /** @class */ (function () {
     Board.prototype.getRandomNumber = function (min, max) {
         var minCeiled = Math.ceil(min);
         var maxFloored = Math.floor(max);
-        return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+        return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
     };
     Board.prototype.moveUp = function () {
         this.updateRowUp(0);
