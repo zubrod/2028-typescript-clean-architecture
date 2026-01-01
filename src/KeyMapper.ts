@@ -1,3 +1,4 @@
+import { DatabaseSQLite } from "./DatabaseSQLite"
 import { Game } from "./Game.interface"
 
 export class KeyMapper {
@@ -5,7 +6,7 @@ export class KeyMapper {
     game: Game
 
     constructor(game: Game) {
-        this.game = game
+        this.game = game;
     }
 
     processInput(input: string) {
@@ -26,8 +27,12 @@ export class KeyMapper {
         }
 
         if (input === "c") {
+            this.game.save()
+
             return false
         }
+
+        return true
 
 
     }

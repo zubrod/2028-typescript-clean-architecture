@@ -19,8 +19,10 @@ var KeyMapper = /** @class */ (function () {
             this.game.moveDown();
         }
         if (input === "c") {
+            this.game.save();
             return false;
         }
+        return true;
     };
     return KeyMapper;
 }());

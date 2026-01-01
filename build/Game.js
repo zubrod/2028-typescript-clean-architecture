@@ -5,12 +5,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var BasicRules_1 = __importDefault(require("./BasicRules"));
 var Game2048 = /** @class */ (function () {
-    function Game2048(highscore) {
+    function Game2048(highscore, db) {
         this.rules = new BasicRules_1.default();
         this.currentScore = 0;
         this.highscore = highscore;
-        this.init(4, 4);
+        this.db = db;
+        //  this.init(4, 4)
+        this.load();
     }
+    Game2048.prototype.load = function () {
+        var dimensions = this.db.load();
+        if (!dimensions) {
+            this.init(4, 4);
+        }
+        else {
+            this.setDimensions(dimensions);
+        }
+    };
+    Game2048.prototype.save = function () {
+        var dimension = this.getDimensions();
+        this.db.save(dimension);
+    };
     Game2048.prototype.getDimensions = function () {
         return this.dimensions;
     };
@@ -31,15 +46,6 @@ var Game2048 = /** @class */ (function () {
             return false;
         }
         this.placeNewNumber();
-    };
-    Game2048.prototype.displayGame = function () {
-        var boardDimensions = this.getDimensions();
-        console.log(boardDimensions[0]);
-        console.log(boardDimensions[1]);
-        console.log(boardDimensions[2]);
-        console.log(boardDimensions[3]);
-        var highScore = this.getHighScore();
-        console.log("Your Highscore: " + highScore);
     };
     Game2048.prototype.getHighScore = function () {
         return this.highscore;
@@ -87,7 +93,11 @@ var Game2048 = /** @class */ (function () {
         return true;
     };
     Game2048.prototype.isGameOver = function () {
-        return this.rules.isGameOver(this.dimensions);
+        if (this.rules.isGameOver(this.dimensions)) {
+            this.db.reset();
+            return true;
+        }
+        return false;
     };
     Game2048.prototype.getValue = function (row, col) {
         return this.dimensions[row][col];

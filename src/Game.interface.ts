@@ -3,9 +3,10 @@ export interface Game {
     getHighScore(): number
     getCurrentScore(): number
     isGameOver(): boolean
-    displayGame(): void
+    getDimensions(): void
     moveUp(): void
     moveDown(): void
     moveLeft(): void
     moveRight(): void
+    save(): void
 }

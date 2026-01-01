@@ -42,9 +42,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Game_1 = __importDefault(require("./Game"));
 var Control_1 = __importDefault(require("./Control"));
 var KeyMapper_1 = require("./KeyMapper");
+var DatabaseSQLite_1 = require("./DatabaseSQLite");
+var GamePresenter_1 = require("./GamePresenter");
 var Main = /** @class */ (function () {
     function Main() {
-        this.game = new Game_1.default(50);
+        this.db = new DatabaseSQLite_1.DatabaseSQLite();
+        this.game = new Game_1.default(50, this.db);
         this.control = new Control_1.default();
         this.keyMapper = new KeyMapper_1.KeyMapper(this.game);
     }
@@ -75,8 +78,10 @@ var Main = /** @class */ (function () {
                         return [4 /*yield*/, this.control.waitForInput()];
                     case 1:
                         input = _a.sent();
-                        this.keyMapper.processInput(input);
-                        this.game.displayGame();
+                        if (!this.keyMapper.processInput(input)) {
+                            return [2 /*return*/, false];
+                        }
+                        GamePresenter_1.GamePresenter.displayGame(this.game);
                         return [2 /*return*/, true];
                 }
             });

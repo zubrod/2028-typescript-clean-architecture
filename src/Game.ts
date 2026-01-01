@@ -1,6 +1,7 @@
 import { getRandomValues } from "node:crypto";
 import Rules from "./BasicRules"
 import { Game } from "./Game.interface"
+import { DatabaseSQLite } from "./DatabaseSQLite";
 
 export default class Game2048 implements Game {
 
@@ -8,14 +9,33 @@ export default class Game2048 implements Game {
     rules: Rules
     currentScore: number
     highscore: number
+    db: DatabaseSQLite
 
-    constructor(highscore: number) {
+    constructor(highscore: number, db: DatabaseSQLite) {
         this.rules = new Rules()
         this.currentScore = 0
         this.highscore = highscore
 
-        this.init(4, 4)
+        this.db = db
 
+        //  this.init(4, 4)
+        this.load()
+
+    }
+
+    load() {
+        const dimensions = this.db.load()
+
+        if (!dimensions) {
+            this.init(4, 4)
+        } else {
+            this.setDimensions(dimensions)
+        }
+    }
+
+    save() {
+        const dimension = this.getDimensions();
+        this.db.save(dimension)
     }
 
     getDimensions(): number[][] {
@@ -46,18 +66,6 @@ export default class Game2048 implements Game {
         this.placeNewNumber()
 
 
-    }
-
-    displayGame(): void {
-        let boardDimensions = this.getDimensions()
-        console.log(boardDimensions[0])
-        console.log(boardDimensions[1])
-        console.log(boardDimensions[2])
-        console.log(boardDimensions[3])
-
-        let highScore = this.getHighScore()
-
-        console.log("Your Highscore: " + highScore)
     }
 
     getHighScore(): number {
@@ -133,7 +141,12 @@ export default class Game2048 implements Game {
     }
 
     isGameOver(): boolean {
-        return this.rules.isGameOver(this.dimensions)
+        if (this.rules.isGameOver(this.dimensions)) {
+            this.db.reset()
+            return true;
+        }
+
+        return false;
     }
 
     getValue(row: number, col: number) {

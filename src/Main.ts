@@ -2,17 +2,23 @@ import { Game } from "./Game.interface"
 import Game2048 from "./Game";
 import Control from "./Control";
 import { KeyMapper } from "./KeyMapper";
+import { DatabaseSQLite } from "./DatabaseSQLite";
+import { GamePresenter } from "./GamePresenter";
 
 export default class Main {
     x: string
     game: Game
     control: Control
     keyMapper: KeyMapper
+    db: DatabaseSQLite
 
     constructor() {
-        this.game = new Game2048(50)
+        this.db = new DatabaseSQLite()
+        this.game = new Game2048(50, this.db)
         this.control = new Control()
+
         this.keyMapper = new KeyMapper(this.game)
+
 
     }
 
@@ -38,9 +44,11 @@ export default class Main {
 
         const input = await this.control.waitForInput()
 
-        this.keyMapper.processInput(input)
+        if (!this.keyMapper.processInput(input)) {
+            return false
+        }
 
-        this.game.displayGame()
+        GamePresenter.displayGame(this.game)
 
 
         return true

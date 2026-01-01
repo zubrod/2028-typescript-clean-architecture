@@ -9,6 +9,10 @@
         "rootDir": "./src",
         //  "strict": true,
         "esModuleInterop": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "moduleResolution": "node",
     },
     "exclude": [
         "node_modules",
