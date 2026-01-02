@@ -1,9 +1,9 @@
-import { Game } from "./Game.interface"
-import Game2048 from "./Game";
-import Control from "./Control";
-import { KeyMapper } from "./KeyMapper";
-import { DatabaseSQLite } from "./DatabaseSQLite";
-import { GamePresenter } from "./GamePresenter";
+import { Game } from "./application/Game.interface"
+import Game2048 from "./application/Game";
+import Control from "./infrastructure/Control";
+import { KeyMapper } from "./infrastructure/KeyMapper";
+import { DatabaseSQLite } from "./infrastructure/DatabaseSQLite";
+import { GamePresenter } from "./ui/GamePresenter";
 
 export default class Main {
     x: string

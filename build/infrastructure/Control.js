@@ -35,60 +35,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Game_1 = __importDefault(require("./application/Game"));
-var Control_1 = __importDefault(require("./infrastructure/Control"));
-var KeyMapper_1 = require("./infrastructure/KeyMapper");
-var DatabaseSQLite_1 = require("./infrastructure/DatabaseSQLite");
-var GamePresenter_1 = require("./ui/GamePresenter");
-var Main = /** @class */ (function () {
-    function Main() {
-        this.db = new DatabaseSQLite_1.DatabaseSQLite();
-        this.game = new Game_1.default(50, this.db);
-        this.control = new Control_1.default();
-        this.keyMapper = new KeyMapper_1.KeyMapper(this.game);
+var readline = require('node:readline');
+var _a = require('node:process'), input = _a.stdin, output = _a.stdout;
+var Control = /** @class */ (function () {
+    function Control() {
     }
-    Main.prototype.run = function () {
+    Control.prototype.waitForInput = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.processUserInput()];
-                    case 1:
-                        if (!_a.sent()) return [3 /*break*/, 2];
-                        return [3 /*break*/, 0];
-                    case 2: return [2 /*return*/, false];
-                }
+                this.rl = readline.createInterface({ input: input, output: output });
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        _this.rl.question('What do you think of Node.js? ', function (answer) {
+                            _this.rl.close();
+                            resolve(answer);
+                        });
+                    })];
             });
         });
     };
-    Main.prototype.processUserInput = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var input;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (this.game.isGameOver()) {
-                            console.log("GameOver");
-                            console.log("Your score: " + this.game.getHighScore());
-                            return [2 /*return*/, false];
-                        }
-                        return [4 /*yield*/, this.control.waitForInput()];
-                    case 1:
-                        input = _a.sent();
-                        if (!this.keyMapper.processInput(input)) {
-                            return [2 /*return*/, false];
-                        }
-                        GamePresenter_1.GamePresenter.displayGame(this.game);
-                        return [2 /*return*/, true];
-                }
-            });
-        });
-    };
-    return Main;
+    return Control;
 }());
-exports.default = Main;
-var game = new Main();
-game.run();
+exports.default = Control;

@@ -1,5 +1,5 @@
 import { DatabaseSQLite } from "./DatabaseSQLite"
-import { Game } from "./Game.interface"
+import { Game } from "../application/Game.interface"
 
 export class KeyMapper {
 

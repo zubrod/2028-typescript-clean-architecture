@@ -1,7 +1,7 @@
 import { getRandomValues } from "node:crypto";
-import Rules from "./BasicRules"
-import { Game } from "./Game.interface"
-import { DatabaseSQLite } from "./DatabaseSQLite";
+import Rules from "../domain/BasicRules"
+import { Game } from "../application/Game.interface"
+import { DatabaseSQLite } from "../infrastructure/DatabaseSQLite";
 
 export default class Game2048 implements Game {
 

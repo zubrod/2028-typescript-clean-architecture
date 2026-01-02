@@ -1,4 +1,4 @@
-import { Rules } from "./Rules.interface";
+import { Rules } from "./Rules.interface"
 
 export default class BasicRules implements Rules {
 

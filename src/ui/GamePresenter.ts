@@ -1,4 +1,4 @@
-import { Game } from "./Game.interface";
+import { Game } from "../application/Game.interface";
 
 export class GamePresenter {
     static displayGame(game: Game) {
