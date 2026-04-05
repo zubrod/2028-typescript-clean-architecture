@@ -99,6 +99,12 @@ var Game2048 = /** @class */ (function () {
         }
         return false;
     };
+    Game2048.prototype.isGameWon = function () {
+        if (this.rules.isGameWon(this.dimensions, 2028)) {
+            return true;
+        }
+        return false;
+    };
     Game2048.prototype.getValue = function (row, col) {
         return this.dimensions[row][col];
     };

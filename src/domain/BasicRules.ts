@@ -2,6 +2,19 @@ import { Rules } from "./Rules.interface"
 
 export default class BasicRules implements Rules {
 
+    isGameWon(dimensions: number[][], goalValue: number): boolean {
+        for (const row of dimensions) {
+            for (const value of row) {
+                if (value >= goalValue) {
+                    return true;
+                }
+            }
+        }
+
+        return false
+
+    }
+
     isGameOver(dimensions: number[][]): boolean {
         for (const row of dimensions) {
             for (const value of row) {
@@ -26,7 +39,7 @@ export default class BasicRules implements Rules {
 
     calculateNewValue(a: number, b: number) {
         if (a === b) {
-            return a + b
+            return a * b
         } else {
             return 0
         }

@@ -1,7 +1,6 @@
-import { getRandomValues } from "node:crypto";
 import Rules from "../domain/BasicRules"
 import { Game } from "../application/Game.interface"
-import { DatabaseSQLite } from "../infrastructure/DatabaseSQLite";
+import { Database } from "../infrastructure/Database.interface"
 
 export default class Game2048 implements Game {
 
@@ -9,9 +8,9 @@ export default class Game2048 implements Game {
     rules: Rules
     currentScore: number
     highscore: number
-    db: DatabaseSQLite
+    db: Database
 
-    constructor(highscore: number, db: DatabaseSQLite) {
+    constructor(highscore: number, db: Database) {
         this.rules = new Rules()
         this.currentScore = 0
         this.highscore = highscore
@@ -143,6 +142,14 @@ export default class Game2048 implements Game {
     isGameOver(): boolean {
         if (this.rules.isGameOver(this.dimensions)) {
             this.db.reset()
+            return true;
+        }
+
+        return false;
+    }
+
+    isGameWon(): boolean {
+        if (this.rules.isGameWon(this.dimensions, 2028)) {
             return true;
         }
 

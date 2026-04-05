@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3';
+import { Database as IDatabase } from "./Database.interface"
 
-export class DatabaseSQLite {
+export class DatabaseSQLite implements IDatabase {
 
     db: Database.Database
 
